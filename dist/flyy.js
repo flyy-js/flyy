@@ -127,6 +127,13 @@
             return this;
         }
 
+        count(picker = null) {
+            if(picker == null) {
+                return this.size();
+            }
+            return this.entries.filter(picker).length;
+        }
+
     }
 
     class Flyy {
@@ -146,6 +153,7 @@
         static brigade(initial = [], intake = null) {
             return new Brigade(initial, intake);
         }
+        
     }
 
     return Flyy;
