@@ -3,20 +3,58 @@
     class Bucket {
         
         constructor(initial = {}) {
-            this.bucket = initial;
+            this.items = initial;
         }
 
-        get(key, def) {
-            return this.bucket[key] ?? def;
+        all() {
+            return this.items;
         }
 
-        put(key, value) {
-            this.bucket[key] = value;
+        has(key) {
+            if(Array.isArray(key) == true) {
+                let has = true;
+                key.forEach(function(k) {
+                    if(k in this.items == false) {
+                        has = false;
+                    } 
+                })
+                return has;
+            }
+            return key in this.items;
+        }
+
+        get(key, maybe = null) {
+            if(Array.isArray(key) == true) {
+                let obj = {};
+                let resolveMaybe = function(m, k, i) {
+                    if(Array.isArray(m) == true) {
+                        return m[i];
+                    }
+                    if(m instanceof Object == true) {
+                        return m[k]
+                    }
+                    return m;
+                }
+                key.forEach((k, index) => obj[k] = this.get(k, resolveMaybe(maybe, key, index)))
+                return obj;
+            }
+            return this.items[key] ?? maybe;
+        }
+
+        put(key, value = null) {
+            if(key instanceof Object === false) {
+                key = { [key]: value };
+            }
+            Object.assign(this.items, key)
             return this;
         }
 
         cut(key) {
-            delete this.bucket[key];
+            if(Array.isArray(key) == true) {
+                key.forEach(k => delete this.items[k]);
+            } else {
+                delete this.items[key];
+            }
             return this;
         }
 
