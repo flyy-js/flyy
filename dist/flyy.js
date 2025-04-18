@@ -136,10 +136,46 @@
 
     }
 
+    class Battery extends Brigade {
+        constructor(initial = [], definitions = null) {
+            super();
+            this.entries = initial.map((ini, index) => {
+                ini = new Bucket(ini);
+                if(definitions !== null) {
+                    Object.keys(definitions).forEach(definition => {
+                        let value = definitions[definition];
+                        if(typeof value == "function") {
+                            ini.put(definition, value(ini, index));
+                        } else if(ini.has(definition) == false) {
+                            ini.put(definition, value);
+                        }
+                    })
+                }
+                return ini;
+            })
+        }
+
+        count(picker = null) {
+            if(picker instanceof Object) {
+                return super.count((bucket) => {
+                    let counted = true;
+                    Object.entries(picker).forEach(entry => {
+                        if(bucket.get(entry[0]) !== entry[1]) counted = false;
+                    })
+                    return counted;
+                });
+            }
+            return super.count(picker);
+        }
+    }
+
     class Flyy {
 
         constructor(initial, intake) {
             if(Array.isArray(initial) == true) {
+                if(initial.length == 1 && initial[0] instanceof Object && Object.keys(initial[0]).length == 0) {
+                    return Flyy.battery([], intake);
+                }
                 return Flyy.brigade(initial, intake);
             } else {
                 return Flyy.bucket(initial, intake);
@@ -152,6 +188,10 @@
 
         static brigade(initial = [], intake = null) {
             return new Brigade(initial, intake);
+        }
+
+        static battery(initial = [], definitions = {}) {
+            return new Battery(initial, definitions);
         }
         
     }
