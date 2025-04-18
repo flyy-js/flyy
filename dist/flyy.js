@@ -88,18 +88,6 @@
             return null
         }
 
-        first() {
-            return this.entries[0]
-        }
-
-        last() {
-            return this.entries[this.size() - 1];
-        }
-
-        size() {
-            return this.entries.length;
-        }
-
         put(entries = [], at = null) {
             if(at === null) {
                 this.entries.push(...entries);
@@ -122,9 +110,41 @@
             return this;
         }
 
+        touch(callback = function(){}, picker = null) {
+            let mustPick = picker !== null;
+            this.entries = this.entries.map(entry => {
+                if(mustPick) {
+                    if(picker(entry) == true) {
+                        return callback(entry);
+                    }
+                } else {
+                    return callback(entry);
+                }
+                return entry;
+            });
+            return this;
+        }
+
+        each(callback = function(){}, picker = null) {
+            this.get(picker).forEach(callback)
+            return this;
+        }
+
         unique() {
             this.entries = Array.from(new Set(this.entries));
             return this;
+        }
+
+        first() {
+            return this.entries[0]
+        }
+
+        last() {
+            return this.entries[this.size() - 1];
+        }
+
+        size() {
+            return this.entries.length;
         }
 
         count(picker = null) {
