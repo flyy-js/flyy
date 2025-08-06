@@ -2,8 +2,9 @@
 
     class Bucket {
         
-        constructor(initial = {}) {
+        constructor(initial = {}, options = { readOnly: false }) {
             this.items = initial;
+            this.readOnly = options['readOnly'] ?? false
         }
 
         all() {
@@ -42,6 +43,9 @@
         }
 
         put(key, value = null) {
+            if(this.readOnly === true) {
+                return console.error("You can't put a new items in this bucket, It's read only.");
+            }
             if(key instanceof Object === false) {
                 key = { [key]: value };
             }
@@ -50,6 +54,9 @@
         }
 
         cut(key) {
+            if(this.readOnly === true) {
+                return console.error("You can't cut items from this bucket, It's read only.");
+            }
             if(Array.isArray(key) == true) {
                 key.forEach(k => delete this.items[k]);
             } else {
@@ -59,9 +66,21 @@
         }
 
         take(key) {
+            if(this.readOnly === true) {
+                return console.error("You can't take items from this bucket, It's read only.");
+            }
             let value = this.get(key);
             this.cut(key);
             return value;
+        }
+
+        touch(key, update) {
+            if(this.readOnly === true) {
+                return console.error("You can't touch items in this bucket, It's read only.");
+            }
+            if(this.has(key)) this.items[key] = update;
+            else this.put(key, update);
+            return this;
         }
     
     }
@@ -260,8 +279,8 @@
             }
         }
 
-        static bucket(initial = {}, intake = null) {
-            return new Bucket(initial);
+        static bucket(initial = {}, options) {
+            return new Bucket(initial, options);
         }
 
         static brigade(initial = [], intake = null, options) {
