@@ -74,12 +74,17 @@
             return value;
         }
 
-        touch(key, update) {
+        touch(key, update = null) {
             if(this.readOnly === true) {
                 return console.error("You can't touch items in this bucket, It's read only.");
             }
-            if(this.has(key)) this.items[key] = update;
-            else this.put(key, update);
+            if(key instanceof Object === false) {
+                key = { [key]: update };
+            }
+            Object.keys(key).forEach(k => {
+                if(this.has(k)) this.items[k] = key[k];
+                else this.put(k, key[k]);
+            })
             return this;
         }
     
