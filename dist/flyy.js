@@ -68,10 +68,13 @@
 
     class Brigade {
 
-        constructor(initial = [], intake = null) {
+        constructor(initial = [], intake = null, options = { readOnly: false, applyInTakeOnNewEntries: false }) {
             if(intake !== null) {
                 this.entries = initial.map(intake);
             } else this.entries = initial;
+            this.intake = intake;
+            this.readOnly = options['readOnly'] ?? false;
+            this.applyInTakeOnNewEntries = options['applyInTakeOnNewEntries'] ?? false;
         }
 
         all() {
@@ -89,6 +92,15 @@
         }
 
         put(entries = [], at = null) {
+            if(this.readOnly === true) {
+                return console.error("You can't put a new entry in this brigade, It's read only.");
+            }
+            if(! Array.isArray(entries)) {
+                entries = [entries];
+            }
+            if(this.applyInTakeOnNewEntries == true && this.intake !== null) {
+                entries = entries.map(this.intake);
+            }
             if(at === null) {
                 this.entries.push(...entries);
             } else {
@@ -98,6 +110,9 @@
         }
 
         cut(picker = null, much = 1) {
+            if(this.readOnly === true) {
+                return console.error("You can't cut entries from this brigade, It's read only.");
+            }
             if(isFinite(picker) == true) {
                 this.entries.splice(picker, much);
             } 
@@ -110,7 +125,18 @@
             return this;
         }
 
+        erase() {
+            if(this.readOnly === true) {
+                return console.error("You can't erase this brigade, It's read only.");
+            }
+            this.entries = [];
+            return this;
+        }
+
         touch(callback = function(){}, picker = null) {
+            if(this.readOnly === true) {
+                return console.error("You can't touch this brigade, It's read only.");
+            }
             let mustPick = picker !== null;
             this.entries = this.entries.map(entry => {
                 if(mustPick) {
@@ -135,16 +161,52 @@
             return this;
         }
 
-        first() {
-            return this.entries[0]
-        }
-
-        last() {
-            return this.entries[this.size() - 1];
-        }
-
         size() {
             return this.entries.length;
+        }
+
+        first(otherwise = function(){}) {
+            if(this.size() >+ 1) {
+                return this.entries[0]
+            }
+            if(typeof otherwise == 'function') {
+                return otherwise(this);
+            }
+            return otherwise;
+        }
+
+        firstOf(picker = function(){ return true; }, otherwise = function(){}) {
+            let filtred = this.get(picker) ?? [];
+            if(filtred.length >= 1) {
+                return filtred[0];
+            } else {
+                if(typeof otherwise == 'function') {
+                    return otherwise(this);
+                }
+                return otherwise;
+            }
+        }
+
+        last(otherwise = function(){}) {
+            if(this.size() >+ 1) {
+                return this.entries[this.size() - 1];
+            }
+            if(typeof otherwise == 'function') {
+                return otherwise(this);
+            }
+            return otherwise;
+        }
+
+        lastOf(picker = function(){ return true; }, otherwise = function(){}) {
+            let filtred = this.get(picker) ?? [];
+            if(filtred.length >= 1) {
+                return filtred[filtred.length - 1];
+            } else {
+                if(typeof otherwise == 'function') {
+                    return otherwise(this);
+                }
+                return otherwise;
+            }
         }
 
         count(picker = null) {
@@ -178,11 +240,7 @@
         count(picker = null) {
             if(picker instanceof Object) {
                 return super.count((bucket) => {
-                    let counted = true;
-                    Object.entries(picker).forEach(entry => {
-                        if(bucket.get(entry[0]) !== entry[1]) counted = false;
-                    })
-                    return counted;
+                    return Object.keys(picker).every((key) => bucket.get(key) === picker[key]);;
                 });
             }
             return super.count(picker);
@@ -206,8 +264,8 @@
             return new Bucket(initial);
         }
 
-        static brigade(initial = [], intake = null) {
-            return new Brigade(initial, intake);
+        static brigade(initial = [], intake = null, options) {
+            return new Brigade(initial, intake, options);
         }
 
         static battery(initial = [], definitions = {}) {
