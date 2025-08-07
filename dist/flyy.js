@@ -296,7 +296,10 @@
             this.applyDefinitionsOnNewEntries = options['applyDefinitionsOnNewEntries'] ?? true;
         }
 
-        rawAll() {
+        rawAll(selector = null) {
+            if(selector !== null && Array.isArray(selector)) {
+                return super.all().map(bucket => bucket.get(selector))
+            }
             return super.all().map(({ items }) => items);
         }
 
