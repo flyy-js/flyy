@@ -1,3 +1,13 @@
+/*!
+    Flyy - 1.0.0
+    Author: Amine Amazou
+    Description: A lightweight JavaScript library designed to simplify data management. It provides flexible structures for handling objects, lists, and collections—making it easier to organize, manipulate, and control your data with clarity and precision.
+    Github Link: https://github.com/flyy.js/
+    Copyright © 2024 amazou
+    Licensed under the MIT license.
+    https://github.com/flyy-js/blob/main/LICENSE
+*/
+
 ;let Flyy = (function() {
 
     const errors = {
