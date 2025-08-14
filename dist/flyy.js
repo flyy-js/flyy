@@ -361,6 +361,9 @@
          * brigade.each(console.log); // logs each item
          */
         each(callback = function(){}, picker = null) {
+            if(picker == null) {
+                picker = () => true;
+            }
             this.get(picker).forEach(callback)
             return this;
         }
