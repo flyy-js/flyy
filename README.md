@@ -113,7 +113,7 @@ user.has(['name', 'email']); // false (email does not exist)
 Retrieves a value for a given key. If the key doesn't exist, it returns the `maybe` default value. Can also retrieve multiple keys into a new object.
 
 ```javascript
-user.get('age'); // 30
+user.get('age'); // 19
 user.get('email', 'no-email@example.com'); // 'no-email@example.com'
 
 // Get multiple keys
@@ -151,7 +151,7 @@ Retrieves the value for a key and then removes that key from the bucket.
 
 ```javascript
 const userAge = user.take('age');
-console.log(userAge); // 30
+console.log(userAge); // 19
 console.log(user.has('age')); // false
 ```
 
@@ -502,5 +502,6 @@ appConfig.put('version', '1.1.0'); // Logs an error: "You can't put new items in
 ## License
 
 Flyy.js is licensed under the **MIT License**
+
 
 Copyright © 2025 amazou.
