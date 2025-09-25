@@ -294,26 +294,26 @@
 
         /**
          * Removes entries.
-         * @param {number|Function|Array|null} picker - Index, range, or filter.
+         * @param {number|Function|Array|null} cutter - Index, range, or filter.
          * @param {number} [much=1] - How many to remove.
          * @returns {Brigade}
          * @example
          * brigade.cut(0); // removes first entry
          * brigade.cut(x => typeof x === 'string'); // removes all strings
          */
-        cut(picker = null, much = 1) {
+        cut(cutter = null, much = 1) {
             if(this.readOnly === true) {
                 if(this instanceof Battery) console.error(errors.battery.cut);
                 return console.error(errors.brigade.cut);
             }
-            if(isFinite(picker) == true) {
-                this.entries.splice(picker, much);
+            if(isFinite(cutter) == true) {
+                this.entries.splice(cutter, much);
             } 
-            if(Array.isArray(picker) == true) {
-                this.entries.splice(picker[0], picker[1] ?? much);
+            if(Array.isArray(cutter) == true) {
+                this.entries.splice(cutter[0], cutter[1] ?? much);
             }
-            if(typeof picker == 'function') {
-                this.entries = this.entries.filter(picker)
+            if(typeof cutter == 'function') {
+                this.entries = this.entries.filter(entry => !cutter(entry))
             }
             return this;
         }
