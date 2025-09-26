@@ -412,7 +412,7 @@
          * emptyBrigade.first('none'); // 'none'
          */
         first(otherwise = function(){}) {
-            if(this.size() >+ 1) {
+            if(this.size() >= 1) {
                 return this.entries[0]
             }
             if(typeof otherwise == 'function') {
