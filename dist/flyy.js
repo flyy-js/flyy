@@ -453,7 +453,7 @@
          * emptyBrigade.last('none'); // 'none'
          */
         last(otherwise = function(){}) {
-            if(this.size() >+ 1) {
+            if(this.size() >= 1) {
                 return this.entries[this.size() - 1];
             }
             if(typeof otherwise == 'function') {
