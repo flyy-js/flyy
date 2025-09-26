@@ -43,7 +43,7 @@
          * @param {Object} [options={ readOnly: false }] - Configuration options.
          * @param {boolean} [options.readOnly=false] - Prevents modifications if true.
          * @example
-         * const b = new Flyy.bucket({ name: 'Alice' });
+         * const b = Flyy.bucket({ name: 'Alice' });
          */
         constructor(initial = {}, options = { readOnly: false }) {
             this.items = initial;
@@ -54,7 +54,7 @@
          * Returns all items in the bucket.
          * @returns {Object}
          * @example
-         * const b = new Flyy.bucket({ name: 'Alice' });
+         * const b = Flyy.bucket({ name: 'Alice' });
          * bucket.all(); // { name: 'Alice' }
          */
         all() {
@@ -66,7 +66,7 @@
          * @param {string|string[]} key - The key(s) to check.
          * @returns {boolean}
          * @example
-         * const b = new Flyy.bucket({ name: 'Alice' });
+         * const b = Flyy.bucket({ name: 'Alice' });
          * bucket.has('name'); // true
          */
         has(key) {
@@ -88,7 +88,7 @@
          * @param {*} [maybe=null] - Default value if key doesn't exist.
          * @returns {*}
          * @example
-         * const b = new Flyy.bucket({ name: 'Alice' });
+         * const b = Flyy.bucket({ name: 'Alice' });
          * bucket.get('name'); // 'Alice'
          * bucket.get('age', 20); // 20
          */
@@ -116,7 +116,7 @@
          * @param {*} [value=null] - Value if single key provided.
          * @returns {Bucket}
          * @example
-         * const b = new Flyy.bucket({ name: 'Alice' });
+         * const b = Flyy.bucket({ name: 'Alice' });
          * bucket.put('age', 23);
          * bucket.put({ city: 'Springfield' });
          */
@@ -136,7 +136,7 @@
          * @param {string|string[]} key - Key(s) to remove.
          * @returns {Bucket}
          * @example
-         * const b = new Flyy.bucket({ name: 'Alice', age: 22, city: 'Springfield' });
+         * const b = Flyy.bucket({ name: 'Alice', age: 22, city: 'Springfield' });
          * bucket.cut('age');
          * bucket.cut(['name', 'city']);
          */
@@ -157,7 +157,7 @@
          * @param {string} key - Key to take.
          * @returns {*} Value before deletion.
          * @example
-         * const b = new Flyy.bucket({ name: 'Alice' });
+         * const b = Flyy.bucket({ name: 'Alice' });
          * const name = bucket.take('name'); // 'Alice'
          */
         take(key) {
@@ -189,7 +189,7 @@
          * @param {*} [update=null] - Value to set if single key.
          * @returns {Bucket}
          * @example
-         * const b = new Flyy.bucket({ name: 'Alice', age: 22, city: 'Springfield' });
+         * const b = Flyy.bucket({ name: 'Alice', age: 22, city: 'Springfield' });
          * bucket.touch('city', 'Casablanca');
          * bucket.touch({ age: 23 })
          */
@@ -223,7 +223,7 @@
          * @param {boolean} [options.readOnly=false]
          * @param {boolean} [options.applyInTakeOnNewEntries=false]
          * @example
-         * const brigade = new Flyy.brigade([1, 2, 3]);
+         * const brigade = Flyy.brigade([1, 2, 3]);
          */
         constructor(initial = [], intake = null, options = { readOnly: false, applyInTakeOnNewEntries: false }) {
             if(intake !== null) {
@@ -238,7 +238,7 @@
          * Gets all entries.
          * @returns {Array}
          * @example
-         * const brigade = new Flyy.brigade([1, 2, 3]);
+         * const brigade = Flyy.brigade([1, 2, 3]);
          * brigade.all(); // [1, 2, 3]
          */
         all() {
@@ -250,7 +250,7 @@
          * @param {number|Function|null} picker
          * @returns {*}
          * @example
-         * const brigade = new Flyy.brigade([1, 2, 3]);
+         * const brigade = Flyy.brigade([1, 2, 3]);
          * brigade.get(0); // 1
          * brigade.get(x => x > 1); // 2
          */
@@ -270,7 +270,7 @@
          * @param {number|null} at - Index to insert at.
          * @returns {Brigade}
          * @example
-         * const brigade = new Flyy.brigade([1, 2, 3]);
+         * const brigade = Flyy.brigade([1, 2, 3]);
          * brigade.put(4); // [1, 2, 3, 4]
          * brigade.put(['a', 'b'], 1); // [1, 'a', 'b', 2, 3, 4]
          */
@@ -339,7 +339,7 @@
          * @param {Function|null} picker - Filter for which entries to modify.
          * @returns {Brigade}
          * @example
-         * const brigade = new Flyy.brigade([1, 2, 3]);
+         * const brigade = Flyy.brigade([1, 2, 3]);
          * brigade.touch(x => x * 2); // [2, 4, 6]
          * brigade.touch(x => x + 1, x => x === 2); // only changes 2 to 3
          */
@@ -382,7 +382,7 @@
          * Removes duplicate entries.
          * @returns {Brigade}
          * @example
-         * const b = new Flyy.brigade([1, 1, 2, 2]);
+         * const b = Flyy.brigade([1, 1, 2, 2]);
          * b.unique(); // [1, 2]
          */
         unique() {
@@ -394,7 +394,7 @@
          * Gets number of entries.
          * @returns {number}
          * @example
-         * const brigade = new Flyy.brigade([1, 2, 3]);
+         * const brigade = Flyy.brigade([1, 2, 3]);
          * brigade.size(); // 3
          */
         size() {
@@ -406,9 +406,9 @@
          * @param {*} otherwise
          * @returns {*}
          * @example
-         * const brigade = new Flyy.brigade([1, 2, 3]);
+         * const brigade = Flyy.brigade([1, 2, 3]);
          * brigade.first(); // 1
-         * const emptyBrigade = new Flyy.brigade([]);
+         * const emptyBrigade = Flyy.brigade([]);
          * emptyBrigade.first('none'); // 'none'
          */
         first(otherwise = function(){}) {
@@ -427,7 +427,7 @@
          * @param {*} otherwise
          * @returns {*}
          * @example
-         * const brigade = new Flyy.brigade([1, 2, 3]);
+         * const brigade = Flyy.brigade([1, 2, 3]);
          * brigade.firstOf(x => x > 2); // 3
          * brigade.firstOf(x => x > 100, 'none'); // 'none'
          */
@@ -448,7 +448,7 @@
          * @param {*} otherwise
          * @returns {*}
          * @example
-         * const brigade = new Flyy.brigade([1, 2, 3]);
+         * const brigade = Flyy.brigade([1, 2, 3]);
          * brigade.last(); // 3
          * emptyBrigade.last('none'); // 'none'
          */
@@ -468,7 +468,7 @@
          * @param {*} otherwise
          * @returns {*}
          * @example
-         * const brigade = new Flyy.brigade([1, 2, 3]);
+         * const brigade = Flyy.brigade([1, 2, 3]);
          * brigade.lastOf(x => typeof x === 'number'); // 3
          * brigade.lastOf(x => x > 100, 'none'); // 'none'
          */
@@ -489,7 +489,7 @@
          * @param {Function|null} picker
          * @returns {number}
          * @example
-         * const brigade = new Flyy.brigade([1, 2, 3, 'a', 'b', 'c']);
+         * const brigade = Flyy.brigade([1, 2, 3, 'a', 'b', 'c']);
          * brigade.count(); // 6 (total count)
          * brigade.count(x => typeof x === 'number'); // 3 (only numbers)
          */
@@ -515,7 +515,7 @@
          * @param {Object|null} definitions - Key defaults or generators.
          * @param {Object} options
          * @example
-         * const battery = new Flyy.battery([{ a: 1 }], { b: 2 });
+         * const battery = Flyy.battery([{ a: 1 }], { b: 2 });
          */
         constructor(initial = [], definitions = null, options = { readOnly: false, applyDefinitionsOnNewEntries: true }) {
             super([], null, options);
@@ -542,7 +542,7 @@
          * @param {string[]|null} selector
          * @returns {Array}
          * @example
-         * const battery = new Flyy.battery([{ name: 'Alice', age: 22 }, { name: 'Bob', age: 30 }]);
+         * const battery = Flyy.battery([{ name: 'Alice', age: 22 }, { name: 'Bob', age: 30 }]);
          * battery.rawAll(['name']); // ['Alice', 'Bob']
          */
         rawAll(selector = null) {
@@ -558,7 +558,7 @@
          * @param {number|null} at
          * @returns {Battery}
          * @example
-         * const battery = new Flyy.battery([], { age: 19 });
+         * const battery = Flyy.battery([], { age: 19 });
          * battery.put({ name: 'Aya' }); 
          * battery.all(); // [{ name: 'Aya', age: 19 }]
          */
@@ -597,7 +597,7 @@
          * @param {string[]|null} selector
          * @returns {Bucket[]|Object[]}
          * @example
-         * const battery = new Flyy.battery([{ x: 1 }, { x: 2 }]);
+         * const battery = Flyy.battery([{ x: 1 }, { x: 2 }]);
          * battery.get(bucket => bucket.x > 1); // [{ x: 2 }]
          */
         get(picker = null, selector = null) {
@@ -622,7 +622,7 @@
          * @param {number} [much=1]
          * @returns {Battery}
          * @example
-         * const battery = new Flyy.battery([{ id: 1 }, { id: 2 }, { id: 3 }]);
+         * const battery = Flyy.battery([{ id: 1 }, { id: 2 }, { id: 3 }]);
          * battery.cut(bucket => bucket.id === 2);
          * battery.all(); // [{ id: 1 }, { id: 3 }]
          */
@@ -640,7 +640,7 @@
          * @param {Object|Function} picker
          * @returns {Battery}
          * @example
-         * const battery = new Flyy.battery([{ count: 1 }, { count: 2 }]);
+         * const battery = Flyy.battery([{ count: 1 }, { count: 2 }]);
          * battery.touch(bucket => bucket.count++, bucket => bucket.count < 2);
          * battery.all(); // [{ count: 2 }, { count: 2 }]
          */
@@ -658,7 +658,7 @@
          * @param {Object|Function|null} picker
          * @returns {number}
          * @example
-         * const battery = new Flyy.battery([{ a: 1 }, { a: 2 }, { a: 3 }]);
+         * const battery = Flyy.battery([{ a: 1 }, { a: 2 }, { a: 3 }]);
          * battery.count(); // 3
          * battery.count(bucket => bucket.a > 1); // 2
          */
@@ -677,7 +677,7 @@
          * @param {*} otherwise
          * @returns {*}
          * @example
-         * const battery = new Flyy.battery([{ status: 'active' }, { status: 'archived' }]);
+         * const battery = Flyy.battery([{ status: 'active' }, { status: 'archived' }]);
          * battery.firstOf(bucket => bucket.status === 'archived'); // { status: 'archived' }
          */
         firstOf(picker = function(){ return true; }, otherwise = function(){}) {
@@ -695,7 +695,7 @@
          * @param {*} otherwise
          * @returns {*}
          * @example
-         * const battery = new Flyy.battery([
+         * const battery = Flyy.battery([
          *   { user: 'A', online: false },
          *   { user: 'B', online: true },
          *   { user: 'C', online: false }
@@ -744,7 +744,7 @@
          * @param {Object} options
          * @returns {Bucket}
          * @example
-         * const bucket = new Flyy({ name: "John" });
+         * const bucket = Flyy.bucket({ name: "John" });
          */
         static bucket(initial = {}, options) {
             return new Bucket(initial, options);
@@ -757,7 +757,7 @@
          * @param {Object} options
          * @returns {Brigade}
          * @example
-         * const brigade = new Flyy(["apple", "banana"]);
+         * const brigade = Flyy.brigade(["apple", "banana"]);
          */
         static brigade(initial = [], intake = null, options) {
             return new Brigade(initial, intake, options);
@@ -770,7 +770,7 @@
          * @param {Object} options
          * @returns {Battery}
          * @example
-         * const battery = new Flyy([{ city: "Paris" }], { country: "France" });
+         * const battery = Flyy.battery([{ city: "Paris" }], { country: "France" });
          */
         static battery(initial = [], definitions = {}, options) {
             return new Battery(initial, definitions, options);
