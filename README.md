@@ -4,8 +4,9 @@
 
 Flyy provides flexible structures for handling objects, lists, and collections—making it easier to organize, manipulate, and control your data with clarity and precision. It's simple, intuitive, and has no dependencies.
 
-For a complete guide, API reference, and usage examples, please visit the official documentation website:
-▶️ [Read the Official Documentation](https://flyy-js.github.io/).
+<b> Documentation: </b> For a complete guide, API reference, and usage examples, please visit the [Official Documentation Website](https://flyy-js.github.io/).
+
+<b> Playground: </b> Test Flyy.js out immediately in the [Online Playground](https://codepen.io/amazou/pen/MYKKZLQ)! 🚀
 
 Flyy.js is crafted with passion and creativity by [Amine Amazou](https://github.com/amine-amazou/). ⭐ Star it if you find it useful!
 
