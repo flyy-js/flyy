@@ -39,9 +39,6 @@
         
         /**
          * Creates a new Bucket.
-         * @param {Object} [initial={}] - Initial items to store.
-         * @param {Object} [options={ readOnly: false }] - Configuration options.
-         * @param {boolean} [options.readOnly=false] - Prevents modifications if true.
          * @example
          * const b = Flyy.bucket({ name: 'Alice' });
          */
@@ -218,11 +215,6 @@
 
         /**
          * Creates a new Brigade.
-         * @param {Array} initial - Initial entries.
-         * @param {Function|null} intake - Optional transform function.
-         * @param {Object} options - Configuration.
-         * @param {boolean} [options.readOnly=false]
-         * @param {boolean} [options.applyInTakeOnNewEntries=false]
          * @example
          * const brigade = Flyy.brigade([1, 2, 3]);
          */
@@ -512,9 +504,6 @@
 
         /**
          * Creates a new Battery.
-         * @param {Array<Object>} initial - Initial bucket objects.
-         * @param {Object|null} definitions - Key defaults or generators.
-         * @param {Object} options
          * @example
          * const battery = Flyy.battery([{ a: 1 }], { b: 2 });
          */
@@ -740,38 +729,41 @@
         }
 
         /**
-         * Creates a Bucket.
-         * @param {Object} initial
-         * @param {Object} options
+         * Creates a new Bucket.
+         * @param {Object} [initial={}] - Initial items to store.
+         * @param {Object} [options={ readOnly: false }] - Configuration options.
+         * @param {boolean} [options.readOnly=false] - Prevents modifications if true.
          * @returns {Bucket}
          * @example
-         * const bucket = Flyy.bucket({ name: "John" });
+         * const b = Flyy.bucket({ name: 'Alice' });
          */
         static bucket(initial = {}, options) {
             return new Bucket(initial, options);
         }
 
         /**
-         * Creates a Brigade.
-         * @param {Array} initial
-         * @param {Function} intake
-         * @param {Object} options
+         * Creates a new Brigade.
+         * @param {Array} initial - Initial entries.
+         * @param {Function|null} intake - Optional transform function.
+         * @param {Object} options - Configuration.
+         * @param {boolean} [options.readOnly=false]
+         * @param {boolean} [options.applyInTakeOnNewEntries=false]
          * @returns {Brigade}
          * @example
-         * const brigade = Flyy.brigade(["apple", "banana"]);
-         */
+         * const brigade = Flyy.brigade([1, 2, 3]);
+         */        
         static brigade(initial = [], intake = null, options) {
             return new Brigade(initial, intake, options);
         }
 
         /**
-         * Creates a Battery.
-         * @param {Array<Object>} initial
-         * @param {Object} definitions
+         * Creates a new Battery.
+         * @param {Array<Object>} initial - Initial bucket objects.
+         * @param {Object|null} definitions - Key defaults or generators.
          * @param {Object} options
          * @returns {Battery}
          * @example
-         * const battery = Flyy.battery([{ city: "Paris" }], { country: "France" });
+         * const battery = Flyy.battery([{ a: 1 }], { b: 2 });
          */
         static battery(initial = [], definitions = {}, options) {
             return new Battery(initial, definitions, options);
