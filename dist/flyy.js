@@ -154,11 +154,12 @@
 
          /**
          * Retrieves and deletes a key.
-         * @param {string} key - Key to take.
+         * @param {string|string[]} key - Key to take.
          * @returns {*} Value before deletion.
          * @example
-         * const b = Flyy.bucket({ name: 'Alice' });
+         * const b = Flyy.bucket({ name: 'Alice', age: 22, city: 'Springfield' });
          * const name = bucket.take('name'); // 'Alice'
+         * const rest = bucket.take(['age', 'city']) // { age: 22, city: 'Springfield' }
          */
         take(key) {
             if(this.readOnly === true) {
