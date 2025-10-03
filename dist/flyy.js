@@ -72,11 +72,11 @@
         has(key) {
             if(Array.isArray(key) == true) {
                 let has = true;
-                key.forEach(function(k) {
+                key.forEach(k => {
                     if(k in this.items == false) {
                         has = false;
                     } 
-                })
+                });
                 return has;
             }
             return key in this.items;
