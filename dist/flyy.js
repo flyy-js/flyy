@@ -493,6 +493,25 @@
             return this.entries.filter(picker).length;
         }
 
+        sort(order = 'ASC') {
+            switch (order.toUpperCase()) {
+                case 'ASC':
+                    this.entries = this.entries.sort((a, b) => a - b);
+                    break;
+                case 'DESC': 
+                    this.entries = this.entries.sort((a, b) => b - a);
+                    break;
+                default:
+                    break;
+            }
+            return this;
+        }
+
+        shuffle() {
+            this.entries = this.entries.sort(() => Math.random() - 0.5);
+            return this;
+        }
+
     }
 
     /**
