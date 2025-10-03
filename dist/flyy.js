@@ -61,7 +61,7 @@
             return this.items;
         }
 
-         /**
+        /**
          * Checks if the bucket contains a key or array of keys.
          * @param {string|string[]} key - The key(s) to check.
          * @returns {boolean}
@@ -132,59 +132,6 @@
         }
 
         /**
-         * Removes one or more keys.
-         * @param {string|string[]} key - Key(s) to remove.
-         * @returns {Bucket}
-         * @example
-         * const b = Flyy.bucket({ name: 'Alice', age: 22, city: 'Springfield' });
-         * bucket.cut('age');
-         * bucket.cut(['name', 'city']);
-         */
-        cut(key) {
-            if(this.readOnly === true) {
-                return console.error(errors.bucket.cut);
-            }
-            if(Array.isArray(key) == true) {
-                key.forEach(k => delete this.items[k]);
-            } else {
-                delete this.items[key];
-            }
-            return this;
-        }
-
-         /**
-         * Retrieves and deletes a key.
-         * @param {string|string[]} key - Key to take.
-         * @returns {*} Value before deletion.
-         * @example
-         * const b = Flyy.bucket({ name: 'Alice', age: 22, city: 'Springfield' });
-         * const name = bucket.take('name'); // 'Alice'
-         * const rest = bucket.take(['age', 'city']) // { age: 22, city: 'Springfield' }
-         */
-        take(key) {
-            if(this.readOnly === true) {
-                return console.error(errors.bucket.take);
-            }
-            let value = this.get(key);
-            this.cut(key);
-            return value;
-        }
-
-         /**
-         * Clears the bucket.
-         * @returns {Bucket}
-         * @example
-         * bucket.erase(); // []
-         */
-        erase() {
-            if(this.readOnly === true) {
-                return console.error(errors.bucket.erase);
-            }
-            this.items = [];
-            return this;
-        }
-
-        /**
          * Updates values only if they exist, otherwise adds them.
          * @param {string|Object} key - Key or object to touch.
          * @param {*} [update=null] - Value to set if single key.
@@ -205,6 +152,59 @@
                 if(this.has(k)) this.items[k] = key[k];
                 else this.put(k, key[k]);
             })
+            return this;
+        }
+
+        /**
+         * Removes one or more keys.
+         * @param {string|string[]} key - Key(s) to remove.
+         * @returns {Bucket}
+         * @example
+         * const b = Flyy.bucket({ name: 'Alice', age: 22, city: 'Springfield' });
+         * bucket.cut('age');
+         * bucket.cut(['name', 'city']);
+         */
+        cut(key) {
+            if(this.readOnly === true) {
+                return console.error(errors.bucket.cut);
+            }
+            if(Array.isArray(key) == true) {
+                key.forEach(k => delete this.items[k]);
+            } else {
+                delete this.items[key];
+            }
+            return this;
+        }
+
+        /**
+         * Retrieves and deletes a key.
+         * @param {string|string[]} key - Key to take.
+         * @returns {*} Value before deletion.
+         * @example
+         * const b = Flyy.bucket({ name: 'Alice', age: 22, city: 'Springfield' });
+         * const name = bucket.take('name'); // 'Alice'
+         * const rest = bucket.take(['age', 'city']) // { age: 22, city: 'Springfield' }
+         */
+        take(key) {
+            if(this.readOnly === true) {
+                return console.error(errors.bucket.take);
+            }
+            let value = this.get(key);
+            this.cut(key);
+            return value;
+        }
+
+        /**
+         * Clears the bucket.
+         * @returns {Bucket}
+         * @example
+         * bucket.erase(); // []
+         */
+        erase() {
+            if(this.readOnly === true) {
+                return console.error(errors.bucket.erase);
+            }
+            this.items = [];
             return this;
         }
     
