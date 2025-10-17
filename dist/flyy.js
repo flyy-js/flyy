@@ -627,7 +627,7 @@
          */
         get(picker = null, selector = null) {
             let picked;
-            if(picker instanceof Object) {
+            if(picker instanceof Object && typeof picker !== 'function') {
                 picked = super.get((bucket) => {
                     return Object.keys(picker).every((key) => bucket.get(key) === picker[key]);;
                 });
