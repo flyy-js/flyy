@@ -493,6 +493,15 @@
             return this.entries.filter(picker).length;
         }
 
+        /**
+         * Sorts entries.
+         * @param {'ASC'|'DESC'} [order='ASC']
+         * @returns {Brigade}
+         * @example
+         * const brigade = Flyy.brigade([2, 1, 3]);
+         * brigade.sort(); // [1, 2, 3]
+         * brigade.sort('DESC'); // [3, 2, 1]
+         */
         sort(order = 'ASC') {
             switch (order.toUpperCase()) {
                 case 'ASC':
@@ -507,6 +516,13 @@
             return this;
         }
 
+        /**
+         * Shuffles entries.
+         * @returns {Brigade}
+         * @example
+         * const brigade = Flyy.brigade([1, 2, 3]);
+         * brigade.shuffle(); // [3, 2, 1]
+         */
         shuffle() {
             this.entries = this.entries.sort(() => Math.random() - 0.5);
             return this;
