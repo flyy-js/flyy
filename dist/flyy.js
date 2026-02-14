@@ -635,6 +635,9 @@
                 picked = super.get(picker);
             } else return null
             if(selector !== null && Array.isArray(selector)) {
+                if(selector.length == 0) {
+                    return picked.map(({ items }) => items)
+                }
                 return picked.map(bucket => {
                     return bucket.get(selector);
                 });
