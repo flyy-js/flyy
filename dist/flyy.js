@@ -698,6 +698,20 @@
             }
             return super.count(picker);
         }
+        
+        sort(by, order = 'ASC') {
+            switch (order.toUpperCase()) {
+                case 'ASC':
+                    this.entries = this.entries.sort((a, b) => a.get(by) - b.get(by));
+                    break;
+                case 'DESC':
+                    this.entries = this.entries.sort((a, b) => b.get(by) - a.get(by));
+                    break;
+                default:
+                    break;
+            }
+            return this;
+        }
 
         /**
          * Gets first matching Bucket.
